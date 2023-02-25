@@ -20,8 +20,6 @@
     "test:style": "standard",
     "test": "tap",
     "lint": "eslint \"**/*.js\"",
-    "postlint": "template-oss-check",
-    "template-oss-apply": "template-oss-apply --force",
     "lintfix": "npm run lint -- --fix",
     "snap": "tap",
     "posttest": "npm run lint"
