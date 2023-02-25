@@ -1,7 +1,7 @@
 {
-  "name": "validate-npm-package-name",
-  "version": "5.0.0",
-  "description": "Give me a string and I'll tell you if it's a valid npm package name",
+  "name": "validate-gws-package-name",
+  "version": "1.0.0",
+  "description": "Give me a string and I'll tell you if it's a valid gws package name",
   "main": "lib/",
   "directories": {
     "test": "test"
@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/validate-npm-package-name.git"
+    "url": "https://github.com/getwebstack/validate-gws-package-name.git"
   },
   "keywords": [
     "npm",
@@ -39,9 +39,9 @@
   "author": "GitHub Inc.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/npm/validate-npm-package-name/issues"
+    "url": "https://github.com/getwebstack/validate-gws-package-name/issues"
   },
-  "homepage": "https://github.com/npm/validate-npm-package-name",
+  "homepage": "https://github.com/getwebstack/validate-gws-package-name",
   "files": [
     "bin/",
     "lib/"
