@@ -27,3 +27,4 @@
 !/tap-snapshots/
 !/test/
 !/.circleci/
+!/package-lock.json
