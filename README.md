@@ -1,6 +1,6 @@
-# validate-npm-package-name
+# validate-gws-package-name
 
-Give me a string and I'll tell you if it's a valid `npm` package name.
+Give me a string and I'll tell you if it's a valid `gws` package name.
 
 This package exports a single synchronous function that takes a `string` as
 input and returns an object with two properties:
@@ -14,7 +14,6 @@ input and returns an object with two properties:
 - [Examples](#examples)
     + [Valid Names](#valid-names)
     + [Invalid Names](#invalid-names)
-- [Legacy Names](#legacy-names)
 - [Tests](#tests)
 - [License](#license)
 
@@ -77,33 +76,6 @@ That was never a valid package name, so you get this:
   errors: [
     'name cannot contain leading or trailing spaces',
     'name can only contain URL-friendly characters'
-  ]
-}
-```
-
-## Legacy Names
-
-In the old days of npm, package names were wild. They could have capital
-letters in them. They could be really long. They could be the name of an
-existing module in node core.
-
-If you give this function a package name that **used to be valid**, you'll see
-a change in the value of `validForNewPackages` property, and a warnings array
-will be present:
-
-```js
-validate("eLaBorAtE-paCkAgE-with-mixed-case-and-more-than-214-characters-----------------------------------------------------------------------------------------------------------------------------------------------------------")
-```
-
-returns:
-
-```js
-{
-  validForNewPackages: false,
-  validForOldPackages: true,
-  warnings: [
-    "name can no longer contain capital letters",
-    "name can no longer contain more than 214 characters"
   ]
 }
 ```
