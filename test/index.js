@@ -1,134 +1,136 @@
 'use strict'
 
 var validate = require('..').validate
-var validateVersionFormat = require('..').validateVersionFormat
+var isValidVersionFormat = require('..').isValidVersionFormat
 var isNewerVersion = require('..').isNewerVersion
 var test = require('tap').test
 
 test('validate-gws-package-name - validate', function (t) {
   // Traditional
 
-  t.same(validate('some-package'), { valid: true })
-  t.same(validate('example.com'), { valid: true })
-  t.same(validate('under_score'), { valid: true })
-  t.same(validate('period.js'), { valid: true })
-  t.same(validate('123numeric'), { valid: true })
+  t.same(validate('some-package'), { isValid: true })
+  t.same(validate('example.com'), { isValid: true })
+  t.same(validate('under_score'), { isValid: true })
+  t.same(validate('period.js'), { isValid: true })
+  t.same(validate('123numeric'), { isValid: true })
   t.same(validate('crazy!'), {
-    valid: false,
+    isValid: false,
     errors: ['name can no longer contain special characters ("~\'!()*")'],
   })
 
   // Scoped (npm 2+)
 
-  t.same(validate('@npm/thingy'), { valid: true })
+  t.same(validate('@npm/thingy'), { isValid: true })
   t.same(validate('@npm-zors/money!time.js'), {
-    valid: false,
+    isValid: false,
     errors: ['name can no longer contain special characters ("~\'!()*")'],
   })
 
   // Invalid
 
   t.same(validate(null), {
-    valid: false,
+    isValid: false,
     errors: ['name cannot be null'] })
 
   t.same(validate(undefined), {
-    valid: false,
+    isValid: false,
     errors: ['name cannot be undefined'] })
 
   t.same(validate(42), {
-    valid: false,
+    isValid: false,
     errors: ['name must be a string'] })
 
   t.same(validate(''), {
-    valid: false,
+    isValid: false,
     errors: ['name length must be greater than zero'] })
 
   t.same(validate('.start-with-period'), {
-    valid: false,
+    isValid: false,
     errors: ['name cannot start with a period'] })
 
   t.same(validate('_start-with-underscore'), {
-    valid: false,
+    isValid: false,
     errors: ['name cannot start with an underscore'] })
 
   t.same(validate('contain:colons'), {
-    valid: false,
+    isValid: false,
     errors: ['name can only contain URL-friendly characters'] })
 
   t.same(validate(' leading-space'), {
-    valid: false,
+    isValid: false,
     errors:
       ['name cannot contain leading or trailing spaces',
         'name can only contain URL-friendly characters'],
   })
 
   t.same(validate('trailing-space '), {
-    valid: false,
+    isValid: false,
     errors:
       ['name cannot contain leading or trailing spaces',
         'name can only contain URL-friendly characters'],
   })
 
   t.same(validate('s/l/a/s/h/e/s'), {
-    valid: false,
+    isValid: false,
     errors: ['name can only contain URL-friendly characters'] })
 
   t.same(validate('node_modules'), {
-    valid: false,
+    isValid: false,
     errors: ['node_modules is a blacklisted name'] })
 
   t.same(validate('favicon.ico'), {
-    valid: false,
+    isValid: false,
     errors: ['favicon.ico is a blacklisted name'] })
 
   // Node/IO Core
 
   t.same(validate('http'), {
-    valid: false,
+    isValid: false,
     errors: ['http is a core module name'] })
 
   t.deepEqual(validate('process'), {
-    valid: false,
+    isValid: false,
     errors: ['process is a core module name'] })
 
   // Long Package Names
 
   /* eslint-disable-next-line max-len */
   t.same(validate('ifyouwanttogetthesumoftwonumberswherethosetwonumbersarechosenbyfindingthelargestoftwooutofthreenumbersandsquaringthemwhichismultiplyingthembyitselfthenyoushouldinputthreenumbersintothisfunctionanditwilldothatforyou-'), {
-    valid: false,
+    isValid: false,
     errors: ['name can no longer contain more than 214 characters'],
   })
 
   /* eslint-disable-next-line max-len */
   t.same(validate('ifyouwanttogetthesumoftwonumberswherethosetwonumbersarechosenbyfindingthelargestoftwooutofthreenumbersandsquaringthemwhichismultiplyingthembyitselfthenyoushouldinputthreenumbersintothisfunctionanditwilldothatforyou'), {
-    valid: true,
+    isValid: true,
   })
 
   // Legacy Mixed-Case
   t.same(validate('CAPITAL-LETTERS'), {
-    valid: false,
+    isValid: false,
     errors: ['name can no longer contain capital letters'] })
 
   t.end()
 })
 
-test('validate-gws-package-name - validateVersionFormat', function (t) {
+test('validate-gws-package-name - isValidVersionFormat', function (t) {
   // Traditional
 
-  t.same(validateVersionFormat('1.1.2'), true)
-  t.same(validateVersionFormat('10.0.0'), true)
-  t.same(validateVersionFormat('a.1.2'), false)
-  t.same(validateVersionFormat('1.b.2'), false)
-  t.same(validateVersionFormat('1.1.c'), false)
+  t.same(isValidVersionFormat('1.1.2'), true)
+  t.same(isValidVersionFormat('10.0.0'), true)
+  t.same(isValidVersionFormat('a.1.2'), false)
+  t.same(isValidVersionFormat('1.b.2'), false)
+  t.same(isValidVersionFormat('1.1.c'), false)
 
-  t.same(validateVersionFormat('&.1.c'), false)
-  t.same(validateVersionFormat('.1.c'), false)
-  t.same(validateVersionFormat(' .1.c'), false)
-  t.same(validateVersionFormat('*.1.c'), false)
-  t.same(validateVersionFormat('1.1'), false)
-  t.same(validateVersionFormat('1'), false)
-  t.same(validateVersionFormat('1.1.1.1'), false)
+  t.same(isValidVersionFormat('&.1.c'), false)
+  t.same(isValidVersionFormat('.1.c'), false)
+  t.same(isValidVersionFormat(' .1.c'), false)
+  t.same(isValidVersionFormat('*.1.c'), false)
+  t.same(isValidVersionFormat('1.1'), false)
+  t.same(isValidVersionFormat('1'), false)
+  t.same(isValidVersionFormat('1.1.1.1'), false)
+  t.same(isValidVersionFormat(''), false)
+  t.same(isValidVersionFormat(undefined), false)
   t.end()
 })
 test('validate-gws-package-name - isNewerVersion', function (t) {
