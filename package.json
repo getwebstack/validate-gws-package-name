@@ -23,7 +23,7 @@
     "lintfix": "npm run lint -- --fix",
     "snap": "tap",
     "posttest": "npm run lint",
-    "release": "npm run build && npm publish --access=public"
+    "release": "npm publish --access=public"
   },
   "repository": {
     "type": "git",
